@@ -87,3 +87,14 @@ export const oauthCallback = async (provider: string, code: string, state?: stri
   })
   return response.data
 }
+
+/**
+ * Exchange a short-lived Gnos3 SSO token for ledger-sync session tokens.
+ * Used when ledger-sync is embedded as a module inside the Gnos3-K4mi stack.
+ */
+export const exchangeGnos3Token = async (gnos3Token: string): Promise<AuthTokens> => {
+  const response = await apiClient.post<AuthTokens>(`${AUTH_BASE}/exchange`, {
+    gnos3_token: gnos3Token,
+  })
+  return response.data
+}

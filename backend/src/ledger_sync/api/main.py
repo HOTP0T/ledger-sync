@@ -1,5 +1,6 @@
 """FastAPI application for ledger-sync web interface."""
 
+import os
 import secrets
 import time
 from collections.abc import AsyncGenerator, Awaitable, Callable
@@ -7,10 +8,11 @@ from contextlib import asynccontextmanager
 from urllib.parse import urlparse
 
 import httpx
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from sqlalchemy.exc import OperationalError
@@ -26,6 +28,7 @@ from ledger_sync.api.analytics_v2 import router as analytics_v2_router
 from ledger_sync.api.auth import router as auth_router
 from ledger_sync.api.calculations import router as calculations_router
 from ledger_sync.api.exchange_rates import router as exchange_rates_router
+from ledger_sync.api.gnos3_sso import router as gnos3_sso_router
 from ledger_sync.api.meta import router as meta_router
 from ledger_sync.api.oauth import router as oauth_router
 from ledger_sync.api.preferences import router as preferences_router
@@ -129,10 +132,20 @@ async def add_security_headers(
     if request.method == "OPTIONS":
         return response
     response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
     response.headers["X-XSS-Protection"] = "1; mode=block"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+
+    # Frame-embedding policy. When LEDGER_SYNC_FRAME_ANCESTORS is set (ledger-sync
+    # deployed as a Gnos3 module), allow the configured origin(s) to iframe the
+    # app. X-Frame-Options has no allowlist form, so it is omitted and the CSP
+    # frame-ancestors directive is authoritative. Empty keeps the strict default.
+    _frame_ancestors = settings.frame_ancestors.strip()
+    if _frame_ancestors:
+        _frame_ancestors_directive = f"frame-ancestors {_frame_ancestors}"
+    else:
+        response.headers["X-Frame-Options"] = "DENY"
+        _frame_ancestors_directive = "frame-ancestors 'none'"
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
         "script-src 'self'; "
@@ -140,7 +153,7 @@ async def add_security_headers(
         "img-src 'self' data:; "
         "font-src 'self'; "
         "connect-src 'self' https:; "
-        "frame-ancestors 'none'; "
+        f"{_frame_ancestors_directive}; "
         "base-uri 'self'; "
         "form-action 'self'"
     )
@@ -255,6 +268,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(oauth_router)
+app.include_router(gnos3_sso_router)
 app.include_router(analytics_router)
 app.include_router(analytics_v2_router)
 app.include_router(calculations_router)
@@ -297,6 +311,49 @@ async def health_db() -> dict[str, str] | JSONResponse:
             status_code=503,
             content={"status": "error", "database": "unavailable"},
         )
+
+
+# ─── Gnos3 dispatcher webhook stubs ──────────────────────────────────────────
+# ledger-sync owns no K4mi tag and does not process documents. It is registered
+# with the Gnos3 dispatcher only so its /health is probed and it appears in
+# GET /api/modules. The dispatcher fans every document event out to all
+# registered modules; these stubs return 200 "ignored" so that fanout stays
+# clean instead of logging 404s.
+
+
+@app.post("/webhook/document-added", include_in_schema=False)
+@app.post("/webhook/document-updated", include_in_schema=False)
+@app.post("/webhook/document-deleted", include_in_schema=False)
+async def dispatcher_webhook_noop() -> dict[str, str]:
+    """No-op receiver for Gnos3 dispatcher fanout."""
+    return {"status": "ignored"}
+
+
+# ─── Single-page-app serving ─────────────────────────────────────────────────
+# When LEDGER_SYNC_STATIC_DIR points at a built SPA (the module container),
+# serve it: hashed build assets under /assets, and index.html as the fallback
+# for all client-side routes (/dashboard, /sso, ...). Registered LAST so the
+# API, /health and /webhook routes above always win. Inert when static_dir is
+# unset (upstream API-only deployment).
+
+_STATIC_DIR = settings.static_dir.strip()
+if _STATIC_DIR and os.path.isdir(_STATIC_DIR):
+    _ASSETS_DIR = os.path.join(_STATIC_DIR, "assets")
+    if os.path.isdir(_ASSETS_DIR):
+        app.mount("/assets", StaticFiles(directory=_ASSETS_DIR), name="assets")
+
+    _INDEX_HTML = os.path.join(_STATIC_DIR, "index.html")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def spa_fallback(full_path: str) -> FileResponse:
+        """Serve a real static file if present, else the SPA shell."""
+        # Unmatched API/health/webhook paths should 404 as JSON, not HTML.
+        if full_path.startswith(("api/", "health", "webhook/")):
+            raise HTTPException(status_code=404, detail="Not found")
+        candidate = os.path.normpath(os.path.join(_STATIC_DIR, full_path))
+        if full_path and candidate.startswith(_STATIC_DIR) and os.path.isfile(candidate):
+            return FileResponse(candidate)
+        return FileResponse(_INDEX_HTML)
 
 
 if __name__ == "__main__":

@@ -21,6 +21,7 @@ import { useAuthInit } from '@/hooks/api/useAuth'
 import HomePage from '@/pages/home/HomePage'
 import DashboardPage from '@/pages/DashboardPage'
 import OAuthCallbackPage from '@/pages/OAuthCallbackPage'
+import SsoPage from '@/pages/SsoPage'
 import DemoEntryPage from '@/pages/DemoEntryPage'
 
 // Lazy-loaded — heavier pages, prefetched in background after initial load
@@ -227,6 +228,8 @@ function App() {
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/demo" element={<DemoEntryPage />} />
                   <Route path="/auth/callback/:provider" element={<OAuthCallbackPage />} />
+                  {/* Gnos3-K4mi module SSO bootstrap (iframe entry point) */}
+                  <Route path="/sso" element={<SsoPage />} />
 
                   {/* Protected routes with layout */}
                   <Route

@@ -73,6 +73,23 @@ class Settings(BaseSettings):
     # Dev: http://localhost:5173 | Prod: your actual frontend URL.
     frontend_url: str = "http://localhost:5173"
 
+    # ─── Gnos3-K4mi module integration ───────────────────────────────────────
+    # When ledger-sync is deployed as an optional module inside the Gnos3-K4mi
+    # stack, the container serves the built React SPA itself. These are inert
+    # (empty) for the upstream Vercel / GitHub-Pages deployment.
+    #
+    # LEDGER_SYNC_STATIC_DIR: directory of the built SPA to serve at "/". Empty
+    #   = API-only (SPA served elsewhere, e.g. the dev Vite server).
+    static_dir: str = ""
+    # LEDGER_SYNC_FRAME_ANCESTORS: space/comma-separated origins allowed to
+    #   iframe this app (the Gnos3 host). Empty keeps the strict upstream
+    #   default (X-Frame-Options: DENY + CSP frame-ancestors 'none').
+    frame_ancestors: str = ""
+    # LEDGER_SYNC_GNOS3_SECRET_KEY: Gnos3's WEBUI_SECRET_KEY, used to verify the
+    #   short-lived SSO exchange JWTs at POST /api/auth/exchange. Empty = the
+    #   Gnos3 SSO bridge is disabled.
+    gnos3_secret_key: str = ""
+
     # AI / Bedrock settings. If LEDGER_SYNC_BEDROCK_API_KEY is set, it's
     # injected into AWS_BEARER_TOKEN_BEDROCK below so boto3 picks it up.
     # This lets all app secrets share the LEDGER_SYNC_ prefix on Vercel.
