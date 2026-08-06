@@ -5,12 +5,16 @@ import path from 'node:path'
 
 // https://vite.dev/config/
 const isGitHubPages = process.env.GITHUB_PAGES === 'true'
+// Disable the PWA service worker for embedded/container builds: a precaching SW
+// inside the Gnos3 iframe can serve a stale app shell after an image rebuild.
+const disablePwa = process.env.LEDGER_SYNC_DISABLE_PWA === 'true'
 
 export default defineConfig({
   // GitHub Pages / custom domain serves from /ledger-sync/ subpath; local dev uses root
   base: isGitHubPages ? '/ledger-sync/' : '/',
   plugins: [
     react(),
+    ...(disablePwa ? [] : [
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
@@ -53,6 +57,7 @@ export default defineConfig({
         enabled: false,
       },
     }),
+    ]),
   ],
   resolve: {
     alias: {
