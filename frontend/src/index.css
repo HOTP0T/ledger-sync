@@ -1,5 +1,108 @@
 @import "tailwindcss";
 
+/* ===== FONTS =====
+   Same as Gnos3 (Gnos3/src/app.css, STYLE-GUIDE.html): Geist for the UI, Geist Mono for
+   font-mono, and a cut of Inter for the characters Geist lacks (Greek, the narrow no-break
+   space of French number formatting, rarer symbols). The Inter faces share the family name and
+   come after Geist: on overlapping unicode-ranges the last face wins, so Greek is never mixed.
+   Licences: assets/fonts/NOTICES.md */
+@font-face {
+  font-family: 'Geist';
+  src: url('./assets/fonts/Geist-1.7.2-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('./assets/fonts/Geist-1.7.2-Italic-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('./assets/fonts/Inter-3.19-Gap.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+00AD, U+0114-0115, U+012C-012D, U+0138, U+013F-0140, U+014E-014F, U+017F-018E, U+0190-0191,
+    U+0193-019F, U+01A2-01AE, U+01B1-01C3, U+01C5-01CC, U+01CF-01E3, U+01EA-0217, U+021C-0236,
+    U+0238-0258, U+025A-02B8, U+02BA-02BB, U+02BD-02C5, U+02C9-02D7, U+02DE-02FF, U+0305,
+    U+030D-0311, U+0313-031A, U+031C-031E, U+0321-0322, U+0324-0325, U+0329-0334, U+0339-0377,
+    U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03E1, U+03F0-03FF, U+0460-0461,
+    U+0464-0469, U+046C-0471, U+0476-048F, U+0494-0495, U+0498-0499, U+049C-049D, U+04A0-04A1,
+    U+04A4-04AD, U+04B4-04B5, U+04B8-04B9, U+04BC-04BF, U+04C1-04CE, U+04D0-04D7, U+04DA-04E1,
+    U+04E4-04E7, U+04EA-04ED, U+04F0-04FF, U+052F, U+1D43, U+1D47-1D49, U+1D4D, U+1D4F-1D50, U+1D52,
+    U+1D56-1D58, U+1D5B, U+1D62-1D65, U+1D9C, U+1DA0, U+1DBB, U+1DBF-1DF5, U+1DFC-1E1F, U+1E22-1E7F,
+    U+1E86-1E9D, U+1E9F, U+1EFA-1F15, U+1F18-1F1D, U+1F20-1F45, U+1F48-1F4D, U+1F50-1F57, U+1F59,
+    U+1F5B, U+1F5D, U+1F5F-1F7D, U+1F80-1FB4, U+1FB6-1FC4, U+1FC6-1FD3, U+1FD6-1FDB, U+1FDD-1FEF,
+    U+1FF2-1FF4, U+1FF6-1FFE, U+2000-200B, U+2010-2012, U+2015-2017, U+201B, U+201F, U+2023-2025,
+    U+2027, U+202F, U+2031, U+2034-2038, U+203B-2043, U+2045-205F, U+2071, U+207A-207F, U+208A-208E,
+    U+2090-209C, U+20A0-20A9, U+20AB, U+20AD-20B0, U+20B2-20B3, U+20B5-20B8, U+20BA-20BC,
+    U+20BE-20BF, U+20DB-20DE, U+20E8, U+20F0, U+2100-2101, U+2103, U+2105-2106, U+2109, U+2113,
+    U+211E-2121, U+2123, U+2126, U+212A-212B, U+212E, U+2132, U+213B, U+214D, U+214F, U+215A,
+    U+215F-2188, U+21BA-21BB, U+21D0, U+21D2, U+21D4, U+21DE-21DF, U+21EA, U+2205, U+2303, U+2305,
+    U+2318, U+2325-2327, U+232B, U+2380, U+2387, U+238B, U+23CE-23CF, U+2423, U+24B6-24CF,
+    U+25A0-25A2, U+25AA, U+25BA-25BB, U+25C4-25C7, U+25E6, U+25EF, U+2600, U+2605-2606, U+263C,
+    U+2661, U+2665, U+26A0, U+2713, U+2717, U+2756, U+2764, U+2780-2788, U+27EF, U+27F5-27FA,
+    U+2B06, U+2B12-2B13, U+2B1C, U+2C7C, U+2C7F, U+2DFF, U+2E18, U+A69F, U+A7FF, U+A92E,
+    U+FE20-FE2D, U+1F12F-1F149, U+1F16A-1F16B, U+1F850, U+1F852;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('./assets/fonts/Inter-3.19-Gap-Oblique.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+00AD, U+0114-0115, U+012C-012D, U+0138, U+013F-0140, U+014E-014F, U+017F-018E, U+0190-0191,
+    U+0193-019F, U+01A2-01AE, U+01B1-01C3, U+01C5-01CC, U+01CF-01E3, U+01EA-0217, U+021C-0236,
+    U+0238-0258, U+025A-02B8, U+02BA-02BB, U+02BD-02C5, U+02C9-02D7, U+02DE-02FF, U+0305,
+    U+030D-0311, U+0313-031A, U+031C-031E, U+0321-0322, U+0324-0325, U+0329-0334, U+0339-0377,
+    U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03E1, U+03F0-03FF, U+0460-0461,
+    U+0464-0469, U+046C-0471, U+0476-048F, U+0494-0495, U+0498-0499, U+049C-049D, U+04A0-04A1,
+    U+04A4-04AD, U+04B4-04B5, U+04B8-04B9, U+04BC-04BF, U+04C1-04CE, U+04D0-04D7, U+04DA-04E1,
+    U+04E4-04E7, U+04EA-04ED, U+04F0-04FF, U+052F, U+1D43, U+1D47-1D49, U+1D4D, U+1D4F-1D50, U+1D52,
+    U+1D56-1D58, U+1D5B, U+1D62-1D65, U+1D9C, U+1DA0, U+1DBB, U+1DBF-1DF5, U+1DFC-1E1F, U+1E22-1E7F,
+    U+1E86-1E9D, U+1E9F, U+1EFA-1F15, U+1F18-1F1D, U+1F20-1F45, U+1F48-1F4D, U+1F50-1F57, U+1F59,
+    U+1F5B, U+1F5D, U+1F5F-1F7D, U+1F80-1FB4, U+1FB6-1FC4, U+1FC6-1FD3, U+1FD6-1FDB, U+1FDD-1FEF,
+    U+1FF2-1FF4, U+1FF6-1FFE, U+2000-200B, U+2010-2012, U+2015-2017, U+201B, U+201F, U+2023-2025,
+    U+2027, U+202F, U+2031, U+2034-2038, U+203B-2043, U+2045-205F, U+2071, U+207A-207F, U+208A-208E,
+    U+2090-209C, U+20A0-20A9, U+20AB, U+20AD-20B0, U+20B2-20B3, U+20B5-20B8, U+20BA-20BC,
+    U+20BE-20BF, U+20DB-20DE, U+20E8, U+20F0, U+2100-2101, U+2103, U+2105-2106, U+2109, U+2113,
+    U+211E-2121, U+2123, U+2126, U+212A-212B, U+212E, U+2132, U+213B, U+214D, U+214F, U+215A,
+    U+215F-2188, U+21BA-21BB, U+21D0, U+21D2, U+21D4, U+21DE-21DF, U+21EA, U+2205, U+2303, U+2305,
+    U+2318, U+2325-2327, U+232B, U+2380, U+2387, U+238B, U+23CE-23CF, U+2423, U+24B6-24CF,
+    U+25A0-25A2, U+25AA, U+25BA-25BB, U+25C4-25C7, U+25E6, U+25EF, U+2600, U+2605-2606, U+263C,
+    U+2661, U+2665, U+26A0, U+2713, U+2717, U+2756, U+2764, U+2780-2788, U+27EF, U+27F5-27FA,
+    U+2B06, U+2B12-2B13, U+2B1C, U+2C7C, U+2C7F, U+2DFF, U+2E18, U+A69F, U+A7FF, U+A92E,
+    U+FE20-FE2D, U+1F12F-1F149, U+1F16A-1F16B, U+1F850, U+1F852;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('./assets/fonts/GeistMono-1.7.2-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Geist has no CJK: name the system fonts (Simplified Chinese unless <html lang> says otherwise). */
+:root {
+  --font-cjk: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Source Han Sans SC', 'Noto Sans SC';
+}
+:root:lang(zh-TW), :root:lang(zh-HK), :root:lang(zh-Hant) {
+  --font-cjk: 'PingFang TC', 'PingFang HK', 'Microsoft JhengHei', 'Noto Sans CJK TC',
+    'Source Han Sans TC', 'Noto Sans TC';
+}
+:root:lang(ja) {
+  --font-cjk: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo',
+    'Noto Sans CJK JP', 'Noto Sans JP';
+}
+:root:lang(ko) {
+  --font-cjk: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans CJK KR', 'Noto Sans KR';
+}
+
 @theme {
   /* ===== BASE COLORS ===== */
   --color-background: #000000;
@@ -207,6 +310,12 @@
   --text-kpi-label: 0.75rem;     /* 12px - card titles ("Net Worth", "Income MTD") */
   --text-kpi-value: 1.25rem;     /* 20px - the standard KPI number */
   --text-kpi-hero:  1.5rem;      /* 24px - reserved for hero KPIs (Tax Summary cards) */
+
+  /* ===== FONTS (faces above) ===== */
+  --font-sans: 'Geist', var(--font-cjk), ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
 
 /* ===== LIGHT THEME ===== */
@@ -378,7 +487,7 @@ body {
   background: var(--app-bg);
   background-attachment: fixed;
   color: var(--color-foreground);
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
   /* Prevent iOS from rubber-banding the whole body behind the app shell --
      scrollable regions handle their own overscroll. */
