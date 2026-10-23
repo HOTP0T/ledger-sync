@@ -21,7 +21,7 @@ export default function CreditCardLimitsSubsection({
   return (
     <div className="pt-4 border-t border-border space-y-3">
       <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
-        <CreditCard className="w-4 h-4 text-primary" />
+        <CreditCard className="w-4 h-4 text-link" />
         Credit Card Limits
       </h3>
       {creditCardAccounts.length === 0 ? (

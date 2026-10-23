@@ -173,10 +173,7 @@ export default function NotificationCenter() {
                 </span>
                 {totalCount > 0 && (
                   <span
-                    className="px-1.5 py-0.5 rounded-md text-[10px] font-bold text-foreground"
-                    style={{
-                      background: `linear-gradient(135deg, ${rawColors.app.blue}, ${rawColors.app.indigo})`,
-                    }}
+                    className="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-primary text-primary-foreground"
                   >
                     {totalCount}
                   </span>

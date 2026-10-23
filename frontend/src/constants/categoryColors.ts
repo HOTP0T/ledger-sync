@@ -36,32 +36,32 @@ import { rawColors, onRawColorsRefresh } from './colors'
  * backend (``Transaction.category``). Add a new entry here when you
  * introduce a new category; never inline a colour at a chart callsite.
  *
- * Built from ``rawColors.app`` and rebuilt IN PLACE on theme toggle (see the
- * ``onRawColorsRefresh`` listener below) so category hues track the active
- * theme while the exported object identity stays stable for importers.
+ * Built from the Gnos3 guide's chart colours (``rawColors.series``: index 0 is
+ * --chart-1) and rebuilt IN PLACE on theme toggle (see the ``onRawColorsRefresh``
+ * listener below) so category hues track the active theme while the exported
+ * object identity stays stable for importers. Each category keeps the hue it had
+ * before the Gnos3 palette (blue, violet, orange, aqua...), now the guide's value.
  */
 function buildExpenseCategoryColors(): Record<string, string> {
-  const c = rawColors.app
+  const [blue, orange, aqua, yellow, magenta, green, violet, red] = rawColors.series
   return {
-    // --- existing colours preserved from pages/bill-calendar/types.ts ---
-    // (kept identical so production users see the same colours they're used to)
-    'Bills & Utilities': c.blue,
-    Entertainment: c.purple,
-    'Entertainment & Recreations': c.purple, // alias seen in production data
-    'Food & Dining': c.orange,
-    Insurance: c.teal,
-    Shopping: c.pink,
-    Transportation: c.yellow,
-    'Health & Fitness': c.green,
-    Education: c.indigo,
+    'Bills & Utilities': blue,
+    Entertainment: violet,
+    'Entertainment & Recreations': violet, // alias seen in production data
+    'Food & Dining': orange,
+    Insurance: aqua,
+    Shopping: magenta,
+    Transportation: yellow,
+    'Health & Fitness': green,
+    Education: red,
 
     // --- additional categories from essentialCategories defaults ---
     // (preferencesStore.ts seeds: Housing, Healthcare, Transportation,
     // Food & Dining, Education, Family, Utilities)
-    Housing: c.indigo,
-    Healthcare: c.green, // mirrors "Health & Fitness"
-    Family: c.pink,
-    Utilities: c.blue, // alias of "Bills & Utilities"
+    Housing: red, // shares Education's colour, as before
+    Healthcare: green, // mirrors "Health & Fitness"
+    Family: magenta,
+    Utilities: blue, // alias of "Bills & Utilities"
   }
 }
 

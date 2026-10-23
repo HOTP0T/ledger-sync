@@ -29,7 +29,7 @@ export default function NotificationsSection({
         {/* Budget alerts */}
         <div className="flex items-center justify-between gap-4 py-3 border-b border-border">
           <div className="flex items-start gap-3">
-            <Receipt className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+            <Receipt className="w-5 h-5 text-link mt-0.5 shrink-0" />
             <div>
               <p className="text-sm font-medium text-foreground">Budget Alerts</p>
               <p className="text-xs text-muted-foreground">
@@ -46,7 +46,7 @@ export default function NotificationsSection({
         {/* Anomaly alerts */}
         <div className="flex items-center justify-between gap-4 py-3 border-b border-border">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-link mt-0.5 shrink-0" />
             <div>
               <p className="text-sm font-medium text-foreground">Anomaly Alerts</p>
               <p className="text-xs text-muted-foreground">
@@ -63,7 +63,7 @@ export default function NotificationsSection({
         {/* Upcoming bills */}
         <div className="flex items-center justify-between gap-4 py-3 border-b border-border">
           <div className="flex items-start gap-3">
-            <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+            <Clock className="w-5 h-5 text-link mt-0.5 shrink-0" />
             <div>
               <p className="text-sm font-medium text-foreground">Upcoming Bills</p>
               <p className="text-xs text-muted-foreground">

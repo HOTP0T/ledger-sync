@@ -132,7 +132,7 @@ export default function TransactionsPage() {
               disabled={isExporting || filteredTransactions.length === 0}
               aria-disabled={isExporting || filteredTransactions.length === 0}
               title={filteredTransactions.length === 0 ? 'No transactions to export' : undefined}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-secondary text-on-accent rounded-lg hover:shadow-lg hover:shadow-primary/50 transition-[color,background-color,border-color,transform,box-shadow] duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-on-accent rounded-lg hover:shadow-lg hover:shadow-primary/50 transition-[color,background-color,border-color,transform,box-shadow] duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               <Download className={`w-4 h-4 ${isExporting ? 'animate-bounce' : ''}`} />
               <span className="text-sm font-medium">{isExporting ? 'Exporting...' : 'Export CSV'}</span>
@@ -150,7 +150,7 @@ export default function TransactionsPage() {
           <div className="flex flex-wrap items-center justify-between gap-4 sm:gap-6">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-primary/20 rounded-xl">
-                <Receipt className="w-6 h-6 text-primary" />
+                <Receipt className="w-6 h-6 text-link" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">{isFiltered ? 'Matching Transactions' : 'Total Transactions'}</p>

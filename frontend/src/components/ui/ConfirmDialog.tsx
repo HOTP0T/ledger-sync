@@ -42,10 +42,12 @@ export default function ConfirmDialog({
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open, handleClose])
 
+  // Gnos3 guide: red only on the button that confirms a deletion; every other
+  // confirmation is the Gnos3 Blue primary button.
   const confirmColors =
     variant === 'danger'
       ? 'bg-app-red/90 hover:bg-app-red text-on-accent'
-      : 'bg-app-orange/90 hover:bg-app-orange text-on-accent'
+      : 'bg-primary hover:bg-primary/90 text-primary-foreground'
 
   return (
     <AnimatePresence>

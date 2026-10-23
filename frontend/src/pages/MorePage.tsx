@@ -27,6 +27,7 @@ import type { LucideIcon } from 'lucide-react'
 import { ROUTES } from '@/constants'
 import { PageHeader } from '@/components/ui'
 import { useLogout } from '@/hooks/api/useAuth'
+import { insideGnos3 } from '@/lib/gnos3Embed'
 
 interface MoreItem {
   to: string
@@ -156,6 +157,8 @@ export default function MorePage() {
           </motion.section>
         ))}
 
+        {/* No sign-out inside the Gnos3 frame: Gnos3 owns the session. */}
+        {!insideGnos3() && (
         <button
           type="button"
           onClick={handleSignOut}
@@ -165,6 +168,7 @@ export default function MorePage() {
           <LogOut className="w-4 h-4" />
           <span className="text-sm font-medium">Sign out</span>
         </button>
+        )}
       </div>
     </div>
   )

@@ -84,10 +84,7 @@ export default function BudgetPage() {
             <motion.button
               onClick={() => m.setIsAdding(true)}
               whileTap={{ scale: 0.97 }}
-              className="flex items-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-sm font-medium text-foreground transition-colors"
-              style={{
-                background: `linear-gradient(135deg, ${rawColors.app.green}, ${rawColors.app.teal})`,
-              }}
+              className="flex items-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-sm font-medium bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
             >
               <Plus className="w-4 h-4" /> Add Budget
             </motion.button>

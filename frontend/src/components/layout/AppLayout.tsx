@@ -64,7 +64,7 @@ export default function AppLayout() {
   // Dynamic page title + scroll reset on navigation
   useEffect(() => {
     const title = PAGE_TITLES[location.pathname]
-    document.title = title ? `${title} | Ledger Sync` : 'Ledger Sync'
+    document.title = title ? `${title} | Gnos3 Finances` : 'Gnos3 Finances'
     document.getElementById('main-content')?.scrollTo(0, 0)
   }, [location.pathname])
 
@@ -76,26 +76,10 @@ export default function AppLayout() {
       <a
         href="#main-content"
         aria-label="Skip to main content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-app-blue focus:text-on-accent focus:rounded-xl focus:text-sm focus:font-medium focus:shadow-lg"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-xl focus:text-sm focus:font-medium focus:shadow-lg"
       >
         Skip to main content
       </a>
-
-      {/* Static gradient orbs — kept subtle so they read as ambient depth, not
-          a glowing "AI dark theme" wash. Roughly half the previous intensity,
-          and the green corner orb is dialed back furthest since it bled most. */}
-      <div
-        className="fixed inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: [
-            'radial-gradient(600px circle at -10% -20%, rgba(94,92,230,0.10), transparent 70%)',
-            'radial-gradient(500px circle at 110% 60%, rgba(10,132,255,0.08), transparent 70%)',
-            'radial-gradient(400px circle at 50% 30%, rgba(191,90,242,0.05), transparent 70%)',
-            'radial-gradient(450px circle at 20% 110%, rgba(48,209,88,0.05), transparent 70%)',
-          ].join(', '),
-        }}
-      />
 
       <Sidebar />
       {/*

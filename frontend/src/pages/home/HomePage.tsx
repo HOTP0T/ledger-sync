@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { ArrowRight, Eye, Heart, PiggyBank, Upload } from 'lucide-react'
+import { ArrowRight, Eye, Heart, Upload } from 'lucide-react'
 
 import ThemeToggle from '@/components/layout/Sidebar/ThemeToggle'
 import { AuthModal, LoginButton } from '@/components/shared/AuthModal'
+import BrandLockup from '@/components/shared/BrandLockup'
 import { ROUTES } from '@/constants'
-import { rawColors } from '@/constants/colors'
 import { enterDemoMode } from '@/lib/demo'
 import { useAuthStore } from '@/store/authStore'
 
@@ -42,17 +42,9 @@ export default function HomePage() {
           paddingRight: 'env(safe-area-inset-right, 0px)',
         }}
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div
-              className="p-2 rounded-xl transition-transform group-hover:scale-105"
-              style={{
-                background: `linear-gradient(135deg, ${rawColors.app.blue}, ${rawColors.app.indigo})`,
-              }}
-            >
-              <PiggyBank className="w-6 h-6 text-foreground" />
-            </div>
-            <span className="text-xl font-bold text-foreground">Ledger Sync</span>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+          <Link to="/" className="rounded-lg" aria-label="Finances home">
+            <BrandLockup align="start" />
           </Link>
 
           <div className="flex items-center gap-2">
@@ -60,10 +52,7 @@ export default function HomePage() {
             {isAuthenticated ? (
               <Link
                 to={ROUTES.DASHBOARD}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-primary-foreground transition-colors hover:scale-105"
-                style={{
-                  background: `linear-gradient(135deg, ${rawColors.app.blue}, ${rawColors.app.indigo})`,
-                }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 <span>Hi, {user?.full_name?.split(' ')[0] || 'there'}!</span>
                 <ArrowRight className="w-4 h-4" />
@@ -104,11 +93,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
                 <button
                   onClick={handleGetStarted}
-                  className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-on-accent transition-[color,background-color,border-color,transform,box-shadow] duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[0_15px_40px_rgba(74,158,255,0.4)]"
-                  style={{
-                    background: `linear-gradient(135deg, ${rawColors.app.blue}, ${rawColors.app.indigo})`,
-                    boxShadow: `0 10px 30px ${rawColors.app.blue}50`,
-                  }}
+                  className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold bg-primary text-primary-foreground transition-[color,background-color,border-color,transform,box-shadow] duration-300 hover:bg-primary/90 hover:shadow-lg"
                 >
                   <Upload className="w-5 h-5" />
                   {isAuthenticated ? 'Upload Your Data' : 'Create Free Account'}

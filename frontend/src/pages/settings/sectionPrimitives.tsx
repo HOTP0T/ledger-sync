@@ -51,7 +51,7 @@ export function Section({
         className="flex items-center gap-3 w-full px-6 py-5 text-left hover:bg-[var(--overlay-2)] transition-colors"
       >
         <div className="p-2 rounded-xl bg-primary/10">
-          <Icon className="w-5 h-5 text-primary" />
+          <Icon className="w-5 h-5 text-link" />
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-base font-semibold text-foreground">{title}</h2>

@@ -1,6 +1,6 @@
 import { ArrowLeftRight, Calendar } from 'lucide-react'
 
-import { rawColors } from '@/constants/colors'
+import { colors, rawColors } from '@/constants/colors'
 
 import { formatMonthLabel, type CompareMode, type MonthData } from './periodMetrics'
 
@@ -48,8 +48,8 @@ export function PeriodSelectors(props: Readonly<PeriodSelectorsProps>) {
           onClick={() => setCompareMode('months')}
           className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
           style={{
-            backgroundColor: compareMode === 'months' ? rawColors.app.blue : 'transparent',
-            color: compareMode === 'months' ? '#fff' : rawColors.text.secondary,
+            backgroundColor: compareMode === 'months' ? colors.app.blueVibrant : 'transparent',
+            color: compareMode === 'months' ? colors.ui.primaryForeground : rawColors.text.secondary,
           }}
         >
           Monthly
@@ -61,8 +61,8 @@ export function PeriodSelectors(props: Readonly<PeriodSelectorsProps>) {
           onClick={() => setCompareMode('years')}
           className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
           style={{
-            backgroundColor: compareMode === 'years' ? rawColors.app.blue : 'transparent',
-            color: compareMode === 'years' ? '#fff' : rawColors.text.secondary,
+            backgroundColor: compareMode === 'years' ? colors.app.blueVibrant : 'transparent',
+            color: compareMode === 'years' ? colors.ui.primaryForeground : rawColors.text.secondary,
           }}
         >
           Yearly

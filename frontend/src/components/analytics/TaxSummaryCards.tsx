@@ -99,7 +99,7 @@ export default function TaxSummaryCards({
       >
         <div className="flex items-center gap-3">
           <div className="p-3 bg-primary/20 rounded-xl">
-            <Calculator className="w-6 h-6 text-primary" />
+            <Calculator className="w-6 h-6 text-link" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-kpi-label text-muted-foreground">

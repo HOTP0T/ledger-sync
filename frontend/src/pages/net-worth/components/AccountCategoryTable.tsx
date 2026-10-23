@@ -185,7 +185,7 @@ export function AccountCategoryTable({
                         key={`header-${currentCategory}`}
                         className="bg-[var(--overlay-2)] hover:bg-[var(--overlay-5)] transition-colors"
                       >
-                        <td className="py-2 px-4 text-sm font-semibold text-primary">
+                        <td className="py-2 px-4 text-sm font-semibold text-link">
                           <button
                             type="button"
                             onClick={() => onToggleCategory(currentCategory)}

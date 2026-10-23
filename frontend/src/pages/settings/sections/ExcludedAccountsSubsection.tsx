@@ -27,7 +27,7 @@ export default function ExcludedAccountsSubsection({
   return (
     <div className="pt-4 border-t border-border space-y-3">
       <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
-        <EyeOff className="w-4 h-4 text-primary" />
+        <EyeOff className="w-4 h-4 text-link" />
         Excluded Accounts
         {excludedAccounts.length > 0 && (
           <span className="px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-app-yellow/20 text-app-yellow">

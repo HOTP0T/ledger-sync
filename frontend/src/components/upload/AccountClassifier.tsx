@@ -8,7 +8,7 @@ import type { AccountType } from '@/types'
 
 const CLASSIFIER_TYPES: Array<{ type: AccountType; activeColor: string; hoverColor: string; label: string }> = [
   { type: 'investment', activeColor: 'bg-app-purple border-app-purple', hoverColor: 'border-border-strong hover:border-app-purple', label: 'Investment' },
-  { type: 'deposit', activeColor: 'bg-app-blue border-app-blue', hoverColor: 'border-border-strong hover:border-app-blue', label: 'Deposit' },
+  { type: 'deposit', activeColor: 'bg-primary border-primary', hoverColor: 'border-border-strong hover:border-app-blue', label: 'Deposit' },
   { type: 'loan', activeColor: 'bg-app-red border-app-red', hoverColor: 'border-border-strong hover:border-app-red', label: 'Loan' },
 ]
 
@@ -47,7 +47,7 @@ export default function AccountClassifier() {
       className="space-y-4 pt-8 border-t border-border"
     >
       <div className="flex items-center gap-2 mb-4">
-        <Settings2 className="w-5 h-5 text-primary" />
+        <Settings2 className="w-5 h-5 text-link" />
         <h3 className="text-lg font-semibold">Account Configuration</h3>
       </div>
 

@@ -111,7 +111,7 @@ export default function BudgetTracker() {
         </div>
         <button
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/20 text-link hover:bg-primary/30 transition-colors"
         >
           <Plus className="w-4 h-4" />
           <span className="text-sm">Add Budget</span>
@@ -216,7 +216,7 @@ export default function BudgetTracker() {
               </div>
 
               {/* Progress Bar */}
-              <div className="h-2 bg-black/20 rounded-full overflow-hidden mb-2">
+              <div className="h-2 bg-[var(--overlay-4)] rounded-full overflow-hidden mb-2">
                 <div
                   className={`h-full transition-colors duration-500 ${getProgressColor(budget.status)}`}
                   style={{ width: `${Math.min(100, budget.percentage)}%` }}
@@ -260,7 +260,7 @@ export default function BudgetTracker() {
                     const suggested = Math.ceil(currentMonthSpending[cat] * 1.2 / 1000) * 1000
                     setBudget(cat, suggested)
                   }}
-                  className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs hover:bg-primary/20 transition-colors"
+                  className="px-3 py-1 rounded-full bg-primary/10 text-link text-xs hover:bg-primary/20 transition-colors"
                 >
                   + {cat} ({formatCurrency(currentMonthSpending[cat])})
                 </button>

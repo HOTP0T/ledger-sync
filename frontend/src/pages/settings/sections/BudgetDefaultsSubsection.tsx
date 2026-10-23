@@ -19,7 +19,7 @@ export default function BudgetDefaultsSubsection({
   return (
     <div className="pt-3 border-t border-border">
       <h3 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
-        <PiggyBank className="w-4 h-4 text-primary" />
+        <PiggyBank className="w-4 h-4 text-link" />
         Budget Defaults
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-start">

@@ -207,17 +207,14 @@ export default function UploadSyncPage() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-app-purple/10 to-secondary/20 border border-border"
+          className="relative overflow-hidden rounded-2xl bg-card border border-border"
         >
-          {/* Background decoration */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]" />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
           <div className="relative p-8 md:p-10">
             <div className="flex flex-col lg:flex-row gap-4 md:gap-6 lg:gap-8 items-center">
               {/* Left: Title & Info */}
               <div className="flex-1 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-link text-sm">
                   <Sparkles className="w-4 h-4" />
                   <span>Smart Sync</span>
                 </div>
@@ -236,7 +233,7 @@ export default function UploadSyncPage() {
                     { icon: FileSpreadsheet, text: '.xlsx, .xls & .csv' },
                   ].map((feature) => (
                     <div key={feature.text} className="flex items-center gap-2 text-sm text-foreground">
-                      <feature.icon className="w-4 h-4 text-primary" />
+                      <feature.icon className="w-4 h-4 text-link" />
                       <span>{feature.text}</span>
                     </div>
                   ))}
@@ -273,7 +270,7 @@ export default function UploadSyncPage() {
                         isDragActive ? 'bg-primary/30 scale-110' : 'bg-primary/20'
                       )}>
                         <Upload className={cn(
-                          'w-8 h-8 text-primary transition-transform',
+                          'w-8 h-8 text-link transition-transform',
                           isDragActive && 'scale-110'
                         )} />
                       </div>
@@ -334,7 +331,7 @@ export default function UploadSyncPage() {
         >
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-primary/20">
-              <FileSpreadsheet className="w-5 h-5 text-primary" />
+              <FileSpreadsheet className="w-5 h-5 text-link" />
             </div>
             <div>
               <h2 className="text-lg font-semibold text-foreground">Expected Format</h2>
@@ -347,13 +344,13 @@ export default function UploadSyncPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-[var(--overlay-2)]">
-                    <th className="px-4 py-3 text-left font-medium text-primary">Date</th>
-                    <th className="px-4 py-3 text-left font-medium text-primary">Account</th>
-                    <th className="px-4 py-3 text-left font-medium text-primary">Category</th>
-                    <th className="px-4 py-3 text-left font-medium text-primary">Subcategory</th>
-                    <th className="px-4 py-3 text-left font-medium text-primary">Type</th>
-                    <th className="px-4 py-3 text-right font-medium text-primary">Amount</th>
-                    <th className="px-4 py-3 text-left font-medium text-primary">Note</th>
+                    <th className="px-4 py-3 text-left font-medium text-link">Date</th>
+                    <th className="px-4 py-3 text-left font-medium text-link">Account</th>
+                    <th className="px-4 py-3 text-left font-medium text-link">Category</th>
+                    <th className="px-4 py-3 text-left font-medium text-link">Subcategory</th>
+                    <th className="px-4 py-3 text-left font-medium text-link">Type</th>
+                    <th className="px-4 py-3 text-right font-medium text-link">Amount</th>
+                    <th className="px-4 py-3 text-left font-medium text-link">Note</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -386,7 +383,7 @@ export default function UploadSyncPage() {
 
             {/* Footer tip */}
             <div className="px-4 py-3 border-t border-border bg-[var(--overlay-2)] flex items-center gap-2">
-              <ArrowRight className="w-4 h-4 text-primary shrink-0" />
+              <ArrowRight className="w-4 h-4 text-link shrink-0" />
               <p className="text-xs text-muted-foreground">
                 Column names are flexible — <span className="text-foreground">"Period"</span> or <span className="text-foreground">"Date"</span> both work.
                 Export from Money Manager Pro for best results.

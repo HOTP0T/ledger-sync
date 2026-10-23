@@ -7,41 +7,23 @@
 
 import { rawColors, onRawColorsRefresh } from './colors'
 
-// Palette builders read rawColors.app/financial fresh each call, so the arrays
-// can be rebuilt in place on theme toggle (see refreshChartConstants). The
-// elements are primitive hex strings captured at build time -- rebuilding is
-// what keeps series colors tracking the active theme.
-const buildChartColors = () => {
-  const c = rawColors.app
-  return [
-    c.purple, c.indigo, c.blue, c.teal, c.green, c.greenVibrant,
-    c.yellow, c.orange, c.red, c.pink, c.blueVibrant, c.purpleVibrant,
-  ]
-}
-
-const buildChartColorsWarm = () => {
-  const c = rawColors.app
-  return [
-    c.red, c.orange, c.yellow, c.greenVibrant, c.green, c.teal,
-    c.blue, c.indigo, c.purple, c.purpleVibrant, c.pink, c.blueVibrant,
-  ]
-}
-
-const buildIncomeColors = () => {
-  const c = rawColors.app
-  return [c.green, c.teal, c.blue, c.purple, c.pink, c.orange]
-}
+// Categorical palettes: the Gnos3 guide's eight chart colours (--chart-1 ... --chart-8) in
+// the guide's order, read fresh from rawColors.series on each build so the arrays can be
+// rebuilt in place on theme toggle (see refreshChartConstants). The order is the guide's
+// colour-blindness-checked sequence, so the three palettes are the same sequence: the warm and
+// income names are kept for their importers. A ninth series wraps around to chart-1.
+const buildSeriesPalette = () => [...rawColors.series]
 
 // Mutable arrays (stable identity for importers) rebuilt in place on theme
 // toggle. Spread-fill is via refreshChartConstants() -> rebuildPalette().
 // Primary chart color palette
-export const CHART_COLORS: string[] = buildChartColors()
+export const CHART_COLORS: string[] = buildSeriesPalette()
 
-// Alternative palette with warmer tones
-export const CHART_COLORS_WARM: string[] = buildChartColorsWarm()
+// Former "warm" palette; now the same guide sequence.
+export const CHART_COLORS_WARM: string[] = buildSeriesPalette()
 
-// Income-focused palette
-export const INCOME_COLORS: string[] = buildIncomeColors()
+// Former income palette; now the same guide sequence.
+export const INCOME_COLORS: string[] = buildSeriesPalette()
 
 // Semantic colors for charts. Values resolve from rawColors at module load and
 // are rebuilt in place by refreshChartConstants() on theme toggle, so the keys
@@ -208,9 +190,9 @@ function rebuildPalette(target: string[], next: string[]): void {
 }
 
 function refreshChartConstants(): void {
-  rebuildPalette(CHART_COLORS, buildChartColors())
-  rebuildPalette(CHART_COLORS_WARM, buildChartColorsWarm())
-  rebuildPalette(INCOME_COLORS, buildIncomeColors())
+  rebuildPalette(CHART_COLORS, buildSeriesPalette())
+  rebuildPalette(CHART_COLORS_WARM, buildSeriesPalette())
+  rebuildPalette(INCOME_COLORS, buildSeriesPalette())
 
   CHART_TEXT.primary = rawColors.chart.textPrimary
   CHART_TEXT.secondary = rawColors.chart.textSecondary

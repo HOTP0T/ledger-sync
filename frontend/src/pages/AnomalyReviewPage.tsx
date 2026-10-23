@@ -111,7 +111,7 @@ function AnomalyDetectionPanel() {
           type="button"
           onClick={handleSave}
           disabled={!hasChanges || updateAnomalySettings.isPending}
-          className="flex items-center gap-2 px-4 py-2.5 sm:py-2 min-h-11 rounded-lg bg-gradient-to-r from-primary to-secondary text-on-accent text-sm font-medium transition-all hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-4 py-2.5 sm:py-2 min-h-11 rounded-lg bg-primary hover:bg-primary/90 text-on-accent text-sm font-medium transition-all hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Save className="w-4 h-4" />
           {updateAnomalySettings.isPending ? 'Saving...' : 'Save'}

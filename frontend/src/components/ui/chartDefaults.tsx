@@ -7,7 +7,7 @@
  *   <YAxis {...yAxisDefaults()} />
  *
  * Gradient helper:
- *   <defs>{areaGradient('income', '#30d158')}</defs>
+ *   <defs>{areaGradient('income', rawColors.app.green)}</defs>
  *   <Area fill="url(#gradient-income)" />
  */
 
@@ -211,7 +211,7 @@ export const LEGEND_DEFAULTS = {
 
 // ─── Brush (drag-to-zoom) defaults ──────────────────────────────────────────
 
-import { rawColors } from '@/constants/colors'
+import { hexToRgba, rawColors } from '@/constants/colors'
 
 /**
  * Custom Brush traveller (the draggable handle at each end of the time-range
@@ -254,13 +254,13 @@ function renderBrushTraveller({
         height={height}
         rx={5}
         ry={5}
-        fill={rawColors.app.blue}
-        stroke={rawColors.app.blueVibrant}
+        fill={rawColors.app.blueVibrant}
+        stroke={rawColors.app.blue}
         strokeWidth={1.5}
       />
-      {/* Two grip lines so it reads as a draggable handle */}
-      <line x1={cx - lineGap} y1={lineTop} x2={cx - lineGap} y2={lineBottom} stroke="rgba(255,255,255,0.9)" strokeWidth={1.5} strokeLinecap="round" />
-      <line x1={cx + lineGap} y1={lineTop} x2={cx + lineGap} y2={lineBottom} stroke="rgba(255,255,255,0.9)" strokeWidth={1.5} strokeLinecap="round" />
+      {/* Two grip lines so it reads as a draggable handle (white = --primary-foreground in both themes) */}
+      <line x1={cx - lineGap} y1={lineTop} x2={cx - lineGap} y2={lineBottom} stroke="#ffffff" strokeOpacity={0.9} strokeWidth={1.5} strokeLinecap="round" />
+      <line x1={cx + lineGap} y1={lineTop} x2={cx + lineGap} y2={lineBottom} stroke="#ffffff" strokeOpacity={0.9} strokeWidth={1.5} strokeLinecap="round" />
     </g>
   )
 }
@@ -287,9 +287,9 @@ export const BRUSH_DEFAULTS = {
   // Hairline frame around the overview strip; the traveller carries the accent.
   // Theme-aware ink/white hairline (SVG attr -> concrete value, not var()).
   stroke: rawColors.chart.svgStroke,
-  // Selection window: a blue wash so the kept range reads as "selected"
+  // Selection window: a Gnos3 Blue wash so the kept range reads as "selected"
   // against the dimmed full-history overview behind it.
-  fill: 'rgba(74,158,255,0.12)',
+  fill: hexToRgba(rawColors.app.blue, 0.12),
   fillOpacity: 1,
   // 34px wrapper gives touch users a comfortable drag target on tablets.
 } as const

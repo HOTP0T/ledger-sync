@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 import { MotionConfig } from 'framer-motion'
@@ -13,6 +13,8 @@ import { ErrorBoundary } from '@/components/shared/ErrorBoundary'
 import { ChunkErrorBoundary } from '@/components/shared/ChunkErrorBoundary'
 import { PreferencesProvider } from '@/components/shared/PreferencesProvider'
 import { ProtectedRoute } from '@/components/shared/ProtectedRoute'
+import ModuleNotice from '@/components/shared/ModuleNotice'
+import { insideGnos3 } from '@/lib/gnos3Embed'
 import { useAuthStore } from '@/store/authStore'
 import { useThemeStore } from '@/store/themeStore'
 import { useAuthInit } from '@/hooks/api/useAuth'
@@ -131,7 +133,7 @@ function NotFoundPage() {
         <p className="text-xl text-muted-foreground">Page not found</p>
         <Link
           to={ROUTES.DASHBOARD}
-          className="inline-block px-6 py-3 bg-gradient-to-r from-primary to-secondary text-on-accent rounded-lg hover:shadow-lg transition-colors"
+          className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
         >
           Go to Dashboard
         </Link>
@@ -178,9 +180,10 @@ function AuthInitializer({ children }: Readonly<{ children: React.ReactNode }>) 
   return <>{children}</>
 }
 
-// Landing page that shows HomePage
+// Landing page: the public HomePage, or inside the Gnos3 frame (where Gnos3 signs the user
+// in and owns the brand) the dashboard, or a plain "session ended" notice.
 function LandingPage() {
-  const { isLoading } = useAuthStore()
+  const { isLoading, isAuthenticated } = useAuthStore()
 
   if (isLoading) {
     return (
@@ -190,7 +193,22 @@ function LandingPage() {
     )
   }
 
+  if (insideGnos3()) {
+    if (isAuthenticated) return <Navigate to={ROUTES.DASHBOARD} replace />
+    return (
+      <ModuleNotice title="Your Session Has Ended">
+        Open Finances again from the Gnos3 sidebar to sign back in.
+      </ModuleNotice>
+    )
+  }
+
   return <HomePage />
+}
+
+// Toasts follow the resolved theme.
+function ThemedToaster() {
+  const resolved = useThemeStore((s) => s.resolved)
+  return <Toaster position="bottom-right" theme={resolved} toastOptions={TOASTER_OPTIONS} />
 }
 
 /** Extracted style object for the Toaster component (avoids recreating on every render).
@@ -272,11 +290,7 @@ function App() {
               </Suspense>
               </ChunkErrorBoundary>
             </BrowserRouter>
-            <Toaster
-              position="bottom-right"
-              theme="dark"
-              toastOptions={TOASTER_OPTIONS}
-            />
+            <ThemedToaster />
           </PreferencesProvider>
         </AuthInitializer>
       </QueryClientProvider>

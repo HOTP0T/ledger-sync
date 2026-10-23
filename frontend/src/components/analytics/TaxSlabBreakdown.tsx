@@ -90,7 +90,7 @@ export default function TaxSlabBreakdown({
                   <td className="py-3 px-4 text-right text-foreground font-semibold tabular-nums">
                     {slab.rate.toFixed(2)}%
                   </td>
-                  <td className="py-3 px-4 text-right font-bold text-primary tabular-nums">
+                  <td className="py-3 px-4 text-right font-bold text-link tabular-nums">
                     {isApplicable ? formatCurrency(taxAmount) : formatCurrency(0)}
                   </td>
                 </tr>
@@ -144,7 +144,7 @@ export default function TaxSlabBreakdown({
               <td colSpan={3} className="py-4 px-4 text-right text-lg font-bold text-foreground">
                 {isProjecting ? 'Total Estimated Tax:' : 'Total Tax Already Paid:'}
               </td>
-              <td className="py-4 px-4 text-right text-2xl font-bold text-primary tabular-nums">
+              <td className="py-4 px-4 text-right text-2xl font-bold text-link tabular-nums">
                 {formatCurrency(totalTax)}
               </td>
             </tr>

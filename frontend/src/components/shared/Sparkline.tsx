@@ -212,7 +212,7 @@ function DefaultSparkline({
               cy={hoverPoint.y}
               r={4}
               fill={color}
-              stroke="rgba(0,0,0,0.6)"
+              stroke={rawColors.chart.tooltipBg}
               strokeWidth={1.5}
             />
           </>

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  PiggyBank,
   Loader2,
   X,
   LogIn,
 } from 'lucide-react'
+import BrandLockup from '@/components/shared/BrandLockup'
 import * as authApi from '@/services/api/auth'
 import type { OAuthProviderConfig } from '@/types'
 
@@ -109,11 +109,9 @@ export function AuthModal({ isOpen, onClose }: Readonly<AuthModalProps>) {
 
               {/* Header */}
               <div className="flex flex-col items-center mb-8">
-                <div className="p-3 rounded-xl bg-app-blue/10 mb-3">
-                  <PiggyBank className="w-8 h-8 text-app-blue" />
-                </div>
-                <h2 id="auth-modal-title" className="text-xl font-semibold text-foreground">
-                  Welcome to Ledger Sync
+                <BrandLockup className="mb-4" />
+                <h2 id="auth-modal-title" className="text-lg font-semibold text-foreground">
+                  Sign In
                 </h2>
                 <p className="text-muted-foreground text-sm mt-1">
                   Sign in to manage your finances

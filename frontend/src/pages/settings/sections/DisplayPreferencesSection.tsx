@@ -9,6 +9,7 @@ import { Settings2, Sun, Moon, Monitor, type LucideIcon } from 'lucide-react'
 import { CURRENCIES, getCurrencyMeta } from '@/constants/currencies'
 import { useThemeStore } from '@/store/themeStore'
 import type { ThemeMode } from '@/lib/theme'
+import { insideGnos3 } from '@/lib/gnos3Embed'
 import { TIME_RANGE_OPTIONS } from '../types'
 import type { LocalPrefs, LocalPrefKey } from '../types'
 import { Section, FieldLabel, FieldHint } from '../sectionPrimitives'
@@ -117,7 +118,7 @@ export default function DisplayPreferencesSection({
                 checked={localPrefs.use_earning_start_date}
                 disabled={!localPrefs.earning_start_date}
                 onChange={(e) => updateLocalPref('use_earning_start_date', e.target.checked)}
-                className="w-4 h-4 rounded bg-[var(--overlay-2)] border-border text-primary focus:ring-primary disabled:opacity-40"
+                className="w-4 h-4 rounded bg-[var(--overlay-2)] border-border text-link focus:ring-primary disabled:opacity-40"
               />
               <span className="text-sm text-foreground">Use as analytics start</span>
             </label>
@@ -133,7 +134,16 @@ export default function DisplayPreferencesSection({
           )}
         </div>
 
-        {/* Appearance -- applied immediately (not part of the staged Save). */}
+        {/* Appearance -- applied immediately (not part of the staged Save).
+            Inside the Gnos3 frame the theme is Gnos3's, so there is no switch. */}
+        {insideGnos3() ? (
+        <div className="lg:col-span-3">
+          <FieldLabel>Appearance</FieldLabel>
+          <p className="text-sm text-muted-foreground">
+            Finances follows the theme you chose in Gnos3 (Settings, Theme).
+          </p>
+        </div>
+        ) : (
         <div className="lg:col-span-3">
           <FieldLabel>Appearance</FieldLabel>
           <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Theme">
@@ -161,6 +171,7 @@ export default function DisplayPreferencesSection({
           </div>
           <FieldHint>System follows your device's light/dark setting.</FieldHint>
         </div>
+        )}
       </div>
     </Section>
   )

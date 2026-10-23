@@ -17,7 +17,7 @@ export function GrowthAssumptionsForm({
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-        <TrendingUp className="w-4 h-4 text-primary" />
+        <TrendingUp className="w-4 h-4 text-link" />
         Growth Assumptions
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -8,7 +8,10 @@
  * Usage in components:
  * - Tailwind classes: `text-app-blue`, `bg-app-green/20`, etc.
  * - Inline styles:   `colors.app.blue` (returns `var(--color-app-blue)`)
- * - Recharts/SVG:    `rawColors.app.blue` (returns resolved hex like `#4a9eff`)
+ * - Recharts/SVG:    `rawColors.app.blue` (returns resolved hex like `#12489A`)
+ *
+ * The values are the Gnos3 design tokens (index.css, "GNOS3 DESIGN TOKENS"). The fallbacks
+ * below are their light values, used only when there is no DOM.
  */
 
 // Helper to reference CSS variables (for inline style props)
@@ -87,6 +90,9 @@ export const colors = {
     borderStrong: cssVar('--color-border-strong'),
     muted: cssVar('--color-muted'),
     mutedForeground: cssVar('--color-muted-foreground'),
+    primary: cssVar('--color-primary'),
+    primaryForeground: cssVar('--color-primary-foreground'),
+    link: cssVar('--color-link'),
   },
 } as const
 
@@ -97,62 +103,75 @@ function buildRawColors() {
   const r = (v: string, fb: string) => resolveColor(v, fb)
   return {
     app: {
-      blue:           r('--color-app-blue',           '#4a9eff'),
-      blueVibrant:    r('--color-app-blue-vibrant',   '#0a84ff'),
-      green:          r('--color-app-green',           '#30d158'),
-      greenVibrant:   r('--color-app-green-vibrant',  '#28cd50'),
-      red:            r('--color-app-red',             '#ff5757'),
-      redVibrant:     r('--color-app-red-vibrant',    '#ff453a'),
-      orange:         r('--color-app-orange',          '#ff9f0a'),
-      orangeVibrant:  r('--color-app-orange-vibrant', '#ff9500'),
-      yellow:         r('--color-app-yellow',          '#ffd93d'),
-      yellowVibrant:  r('--color-app-yellow-vibrant', '#ffd426'),
-      teal:           r('--color-app-teal',            '#5ac8f5'),
-      tealVibrant:    r('--color-app-teal-vibrant',   '#64d2ff'),
-      purple:         r('--color-app-purple',          '#a78bfa'),
-      purpleVibrant:  r('--color-app-purple-vibrant', '#bf5af2'),
-      pink:           r('--color-app-pink',            '#ff8fab'),
-      pinkVibrant:    r('--color-app-pink-vibrant',   '#ff375f'),
-      indigo:         r('--color-app-indigo',          '#818cf8'),
-      indigoVibrant:  r('--color-app-indigo-vibrant', '#5e5ce6'),
+      blue:           r('--color-app-blue',           '#12489A'),
+      blueVibrant:    r('--color-app-blue-vibrant',   '#12489A'),
+      green:          r('--color-app-green',           '#008236'),
+      greenVibrant:   r('--color-app-green-vibrant',  '#008236'),
+      red:            r('--color-app-red',             '#e7000b'),
+      redVibrant:     r('--color-app-red-vibrant',    '#e7000b'),
+      orange:         r('--color-app-orange',          '#eb6834'),
+      orangeVibrant:  r('--color-app-orange-vibrant', '#eb6834'),
+      yellow:         r('--color-app-yellow',          '#bb4d00'),
+      yellowVibrant:  r('--color-app-yellow-vibrant', '#bb4d00'),
+      teal:           r('--color-app-teal',            '#1baf7a'),
+      tealVibrant:    r('--color-app-teal-vibrant',   '#1baf7a'),
+      purple:         r('--color-app-purple',          '#4a3aa7'),
+      purpleVibrant:  r('--color-app-purple-vibrant', '#4a3aa7'),
+      pink:           r('--color-app-pink',            '#e87ba4'),
+      pinkVibrant:    r('--color-app-pink-vibrant',   '#e87ba4'),
+      indigo:         r('--color-app-indigo',          '#2a78d6'),
+      indigoVibrant:  r('--color-app-indigo-vibrant', '#2a78d6'),
     },
     financial: {
-      income:     r('--color-income',     '#30d158'),
-      expense:    r('--color-expense',    '#ff5757'),
-      savings:    r('--color-savings',    '#a78bfa'),
-      transfer:   r('--color-transfer',   '#5ac8f5'),
-      investment: r('--color-investment', '#4a9eff'),
+      income:     r('--color-income',     '#008236'),
+      expense:    r('--color-expense',    '#e7000b'),
+      savings:    r('--color-savings',    '#4a3aa7'),
+      transfer:   r('--color-transfer',   '#1baf7a'),
+      investment: r('--color-investment', '#2a78d6'),
     },
     text: {
-      primary:    r('--color-text-primary',    '#f5f5f7'),
-      secondary:  r('--color-text-secondary',  '#8e8e93'),
-      tertiary:   r('--color-text-tertiary',   '#7c7c80'),
-      quaternary: r('--color-text-quaternary', '#48484a'),
+      primary:    r('--color-text-primary',    '#0C1422'),
+      secondary:  r('--color-text-secondary',  '#56637A'),
+      tertiary:   r('--color-text-tertiary',   '#56637A'),
+      quaternary: r('--color-text-quaternary', '#93a0b6'),
     },
+    // The Gnos3 guide's eight chart colours (--chart-1 ... --chart-8), in its order: every
+    // neighbouring pair passes the colour-blindness check in both themes. Assign categorical
+    // series in this order.
+    series: [
+      r('--chart-1', '#2a78d6'),
+      r('--chart-2', '#eb6834'),
+      r('--chart-3', '#1baf7a'),
+      r('--chart-4', '#eda100'),
+      r('--chart-5', '#e87ba4'),
+      r('--chart-6', '#008300'),
+      r('--chart-7', '#4a3aa7'),
+      r('--chart-8', '#e34948'),
+    ],
     // Chart-only neutrals/surfaces. CSS var() can't be used in SVG presentation
     // attributes, so these resolve the --chart-* tokens to concrete strings for
-    // Recharts. Fallbacks are the historical dark values so SSR/no-DOM is safe.
+    // Recharts. Fallbacks are the light values so SSR/no-DOM is safe.
     chart: {
-      textPrimary:         r('--chart-text-primary',         '#fafafa'),
-      textSecondary:       r('--chart-text-secondary',       '#f5f5f7'),
-      textMuted:           r('--chart-text-muted',           '#a1a1aa'),
-      textSubtle:          r('--chart-text-subtle',          '#71717a'),
-      textDim:             r('--chart-text-dim',             '#52525b'),
-      axisColor:           r('--chart-axis-color',           '#9ca3af'),
-      grid:                r('--chart-grid',                 'rgba(255, 255, 255, 0.04)'),
-      axisLine:            r('--chart-axis-line',            'rgba(255, 255, 255, 0.06)'),
-      cursor:              r('--chart-cursor',               'rgba(255, 255, 255, 0.06)'),
-      referenceLine:       r('--chart-reference-line',       'rgba(255, 255, 255, 0.15)'),
-      referenceLineStrong: r('--chart-reference-line-strong', 'rgba(255, 255, 255, 0.2)'),
-      activeStroke:        r('--chart-active-stroke',        'rgba(255, 255, 255, 0.3)'),
-      svgStroke:           r('--chart-svg-stroke',           'rgba(255, 255, 255, 0.08)'),
-      tooltipBg:           r('--chart-tooltip-bg',           'rgba(26, 26, 28, 0.95)'),
-      tooltipBorder:       r('--chart-tooltip-border',       'rgba(255, 255, 255, 0.08)'),
-      gridSolid:           r('--chart-grid-solid',           '#2a2a2e'),
-      neutral:             r('--chart-neutral',              '#9ca3af'),
-      muted:               r('--chart-muted',                '#6b7280'),
-      inputBg:             r('--chart-input-bg',             'rgba(44, 44, 46, 0.6)'),
-      inputBorder:         r('--chart-input-border',         'rgba(58, 58, 60, 0.6)'),
+      textPrimary:         r('--chart-text-primary',         '#0C1422'),
+      textSecondary:       r('--chart-text-secondary',       '#0C1422'),
+      textMuted:           r('--chart-text-muted',           '#56637A'),
+      textSubtle:          r('--chart-text-subtle',          '#56637A'),
+      textDim:             r('--chart-text-dim',             '#93a0b6'),
+      axisColor:           r('--chart-axis-color',           '#56637A'),
+      grid:                r('--chart-grid',                 '#e9eef6'),
+      axisLine:            r('--chart-axis-line',            '#DCE2EC'),
+      cursor:              r('--chart-cursor',               'rgba(12, 20, 34, 0.06)'),
+      referenceLine:       r('--chart-reference-line',       '#c6cedb'),
+      referenceLineStrong: r('--chart-reference-line-strong', '#aab5c7'),
+      activeStroke:        r('--chart-active-stroke',        'rgba(12, 20, 34, 0.30)'),
+      svgStroke:           r('--chart-svg-stroke',           '#DCE2EC'),
+      tooltipBg:           r('--chart-tooltip-bg',           '#ffffff'),
+      tooltipBorder:       r('--chart-tooltip-border',       '#DCE2EC'),
+      gridSolid:           r('--chart-grid-solid',           '#DCE2EC'),
+      neutral:             r('--chart-neutral',              '#56637A'),
+      muted:               r('--chart-muted',                '#93a0b6'),
+      inputBg:             r('--chart-input-bg',             '#ffffff'),
+      inputBorder:         r('--chart-input-border',         '#DCE2EC'),
     },
   }
 }
@@ -186,6 +205,7 @@ export function refreshRawColors(): void {
   Object.assign(rawColors.financial, next.financial)
   Object.assign(rawColors.text, next.text)
   Object.assign(rawColors.chart, next.chart)
+  rawColors.series.splice(0, rawColors.series.length, ...next.series)
   for (const listener of rawColorsListeners) listener()
 }
 

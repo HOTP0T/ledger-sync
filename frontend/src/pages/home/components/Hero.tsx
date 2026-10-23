@@ -74,7 +74,7 @@ export function Hero({ isAuthenticated, onGetStarted, onTryDemo }: Readonly<Hero
             transition={{ delay: 0.3 }}
             className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            Ledger Sync is your all-in-one financial dashboard. Import your transactions from
+            Gnos3 Finances is your all-in-one financial dashboard. Import your transactions from
             Excel, track investments, analyze spending patterns, and plan your taxes — all in
             one beautiful interface.
           </motion.p>
@@ -87,11 +87,7 @@ export function Hero({ isAuthenticated, onGetStarted, onTryDemo }: Readonly<Hero
           >
             <button
               onClick={onGetStarted}
-              className="group flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-on-accent transition-[color,background-color,border-color,transform,box-shadow] duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[0_15px_40px_rgba(74,158,255,0.4)]"
-              style={{
-                background: `linear-gradient(135deg, ${rawColors.app.blue}, ${rawColors.app.indigo})`,
-                boxShadow: `0 10px 30px ${rawColors.app.blue}50`,
-              }}
+              className="group flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold bg-primary text-primary-foreground transition-[color,background-color,border-color,transform,box-shadow] duration-300 hover:bg-primary/90 hover:shadow-lg"
             >
               <Target className="w-5 h-5" />
               {isAuthenticated ? 'Go to Dashboard' : 'Get Started Free'}

@@ -12,7 +12,7 @@ function ChatMessageComponent({ message }: Readonly<{ message: ChatMessageType }
         }`}
       >
         {isUser ? (
-          <User className="w-3.5 h-3.5 text-primary" />
+          <User className="w-3.5 h-3.5 text-link" />
         ) : (
           <Sparkles className="w-3.5 h-3.5 text-app-purple" />
         )}

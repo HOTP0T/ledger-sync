@@ -17,31 +17,12 @@ export default defineConfig({
     ...(disablePwa ? [] : [
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
-      manifest: {
-        name: 'Ledger Sync',
-        short_name: 'Ledger',
-        description:
-          'Self-hosted personal finance dashboard -- analytics, budgeting, and tax planning.',
-        theme_color: '#000000',
-        background_color: '#000000',
-        display: 'standalone',
-        orientation: 'portrait',
-        // start_url is relative to Vite's `base`, so it resolves to /ledger-sync/ on GH Pages.
-        start_url: '.',
-        scope: '.',
-        icons: [
-          { src: 'pwa-64x64.png', sizes: '64x64', type: 'image/png' },
-          { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-          {
-            src: 'maskable-icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-        ],
-      },
+      includeAssets: ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png', 'theme-init.js'],
+      // The manifest is the static public/site.webmanifest (Gnos3 Brand Kit icons), linked
+      // from index.html, so builds without the service worker (the Gnos3 module image,
+      // LEDGER_SYNC_DISABLE_PWA) ship the same manifest. Icon paths in it are relative,
+      // so it also works under the /ledger-sync/ GitHub Pages base.
+      manifest: false,
       workbox: {
         // App shell only: precache JS/CSS/HTML/SVG/PNG emitted by Vite.
         // API responses are intentionally NOT cached -- financial data must be fresh.

@@ -39,7 +39,7 @@ export async function buildFinancialContext(): Promise<string> {
   const today = toLocalDateKey(new Date())
 
   return [
-    `You are the finance assistant for a user of Ledger Sync. All amounts are in ${currency} (${displayCurrency}).`,
+    `You are the finance assistant for a user of Gnos3 Finances. All amounts are in ${currency} (${displayCurrency}).`,
     `Today is ${today}. The user's fiscal year starts in month ${fyStart} (${monthName(fyStart)}).`,
     '',
     'You have tools for accessing the user\'s actual financial data: accounts, transactions, monthly summaries, spending by category, net worth, recurring bills, and goals.',

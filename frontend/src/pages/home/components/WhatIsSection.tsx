@@ -15,10 +15,10 @@ export function WhatIsSection() {
         >
           <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-6">
-              What is Ledger Sync?
+              What is Gnos3 Finances?
             </h2>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Ledger Sync is a powerful personal finance management tool designed for the Indian
+              Gnos3 Finances is a powerful personal finance management tool designed for the Indian
               market. It seamlessly imports your transaction data from Money Manager Pro Excel
               exports and provides comprehensive analytics.
             </p>

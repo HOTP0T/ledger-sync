@@ -54,7 +54,7 @@ export default function DashboardWidgetsSection({
                 onClick={() => toggleWidget(widget.key)}
                 className={`w-5 h-5 rounded flex items-center justify-center shrink-0 transition-colors ${
                   isVisible
-                    ? 'bg-primary/20 text-primary border border-primary/50'
+                    ? 'bg-primary/20 text-link border border-primary/50'
                     : 'bg-[var(--overlay-2)] border border-border'
                 }`}
               >
@@ -68,7 +68,7 @@ export default function DashboardWidgetsSection({
       <button
         type="button"
         onClick={showAll}
-        className="text-xs text-primary hover:underline mt-2"
+        className="text-xs text-link hover:underline mt-2"
       >
         Show all widgets
       </button>

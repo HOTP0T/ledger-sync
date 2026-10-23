@@ -42,13 +42,13 @@ export function FlowSummaryCards(props: Readonly<FlowSummaryCardsProps>) {
       <div className="glass rounded-2xl border border-border p-4 sm:p-6">
         <div className="flex items-center gap-3 mb-2">
           <ArrowRightLeft
-            className={`w-5 h-5 shrink-0 ${netSavings >= 0 ? 'text-primary' : 'text-app-red'}`}
+            className={`w-5 h-5 shrink-0 ${netSavings >= 0 ? 'text-link' : 'text-app-red'}`}
           />
           <p className="text-sm text-muted-foreground">Net Savings</p>
         </div>
         <p
           className={`text-xl sm:text-2xl font-bold truncate tabular-nums ${
-            netSavings >= 0 ? 'text-primary' : 'text-app-red'
+            netSavings >= 0 ? 'text-link' : 'text-app-red'
           }`}
         >
           {netSavings < 0 && <span aria-hidden>-</span>}

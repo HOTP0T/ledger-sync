@@ -41,7 +41,7 @@ export function RsuGrants(props: Readonly<RsuGrantsProps>) {
         <button
           type="button"
           onClick={onAddGrant}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/15 text-primary hover:bg-primary/25 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/15 text-link hover:bg-primary/25 transition-colors"
         >
           <Plus className="w-3.5 h-3.5" />
           Add Grant
@@ -206,7 +206,7 @@ export function RsuGrants(props: Readonly<RsuGrantsProps>) {
           <button
             type="button"
             onClick={() => onAddVesting(grant.id)}
-            className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 transition-colors"
+            className="flex items-center gap-1.5 text-xs text-link hover:text-link/80 transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Vesting Date

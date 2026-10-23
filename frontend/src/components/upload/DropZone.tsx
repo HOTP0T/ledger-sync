@@ -122,7 +122,7 @@ function UploadingOverlay({ isUploading }: Readonly<UploadingOverlayProps>) {
   }
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-xl">
+    <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-xl">
       <div className="flex flex-col items-center gap-2">
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
         <p className="text-sm font-medium">Uploading...</p>

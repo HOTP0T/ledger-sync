@@ -75,7 +75,7 @@ export function SalaryFieldsGrid(props: Readonly<SalaryFieldsGridProps>) {
           <button
             type="button"
             onClick={onAddFY}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/15 text-primary hover:bg-primary/25 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/15 text-link hover:bg-primary/25 transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Add FY

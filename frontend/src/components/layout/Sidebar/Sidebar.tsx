@@ -13,6 +13,7 @@ import NotificationCenter from '@/components/shared/NotificationCenter'
 import ProfileModal from '@/components/shared/ProfileModal'
 import { useBudgets, useAnomalies, useRecurringTransactions } from '@/hooks/api/useAnalyticsV2'
 import { exitDemoMode } from '@/lib/demo'
+import { insideGnos3 } from '@/lib/gnos3Embed'
 
 import SidebarSection from './SidebarSection'
 import SidebarItem from './SidebarItem'
@@ -83,6 +84,10 @@ export default function Sidebar() {
 
   const closeMobile = useCallback(() => setIsMobileOpen(false), [])
 
+  // Inside the Gnos3 frame Gnos3 owns identity and theme: no brand / user menu,
+  // theme switch or sign-out here (Gnos3 design guide).
+  const inGnos3 = insideGnos3()
+
   return (
     <>
       {/* Mobile toggle -- offset by safe-area-inset-top so it clears the iOS notch in PWA mode.
@@ -115,11 +120,13 @@ export default function Sidebar() {
         {/* pt-safe ensures the brand row clears the iOS notch when the drawer
             opens in PWA standalone mode; desktop gets no extra padding. */}
         <div className="flex flex-col h-full pt-safe">
-          {/* Brand Header */}
-          <BrandHeader
-            user={isDemoMode ? { email: 'Demo Mode' } : user}
-            onOpenProfile={() => { if (!isDemoMode) setShowProfile(true) }}
-          />
+          {/* Brand Header (outside Gnos3 only) */}
+          {!inGnos3 && (
+            <BrandHeader
+              user={isDemoMode ? { email: 'Demo Mode' } : user}
+              onOpenProfile={() => { if (!isDemoMode) setShowProfile(true) }}
+            />
+          )}
 
           {/* Search */}
           <div className="px-3 py-2 border-b border-border">
@@ -182,7 +189,7 @@ export default function Sidebar() {
           >
             <div className="flex items-center justify-center gap-1">
               <CurrencySwitcher />
-              <ThemeToggle />
+              {!inGnos3 && <ThemeToggle />}
               <NotificationCenter />
               {utilityItems.map((item) => (
                 <Link
@@ -206,7 +213,7 @@ export default function Sidebar() {
                 >
                   <LogOut size={18} />
                 </button>
-              ) : (
+              ) : !inGnos3 && (
                 <button
                   type="button"
                   onClick={handleLogout}

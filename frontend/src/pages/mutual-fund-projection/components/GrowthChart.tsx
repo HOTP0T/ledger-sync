@@ -69,7 +69,7 @@ export function GrowthChart(props: Readonly<GrowthChartProps>) {
               aria-pressed={projectionYears === preset.years}
               className={`px-3 py-2.5 rounded-full border-2 font-semibold text-xs transition ${
                 projectionYears === preset.years
-                  ? 'border-primary bg-primary/20 text-primary'
+                  ? 'border-primary bg-primary/20 text-link'
                   : 'border-border bg-transparent text-muted-foreground hover:border-primary/50'
               }`}
             >

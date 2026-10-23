@@ -71,9 +71,9 @@ function ModeCard(props: Readonly<ModeCardProps>) {
       } disabled:opacity-50 disabled:cursor-wait`}
     >
       <div className="flex items-center gap-2">
-        <span className={selected ? 'text-primary' : 'text-muted-foreground'}>{icon}</span>
+        <span className={selected ? 'text-link' : 'text-muted-foreground'}>{icon}</span>
         <span className="text-sm font-medium text-foreground">{title}</span>
-        {selected && <CheckCircle className="w-3.5 h-3.5 text-primary ml-auto" />}
+        {selected && <CheckCircle className="w-3.5 h-3.5 text-link ml-auto" />}
       </div>
       <p className="text-xs text-muted-foreground mt-1 ml-6">{subtitle}</p>
     </button>

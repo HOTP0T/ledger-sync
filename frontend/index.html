@@ -1,49 +1,24 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFFMG7D8DP"></script>
-    <script>
-      globalThis.dataLayer = globalThis.dataLayer || [];
-      function gtag(){globalThis.dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-PFFMG7D8DP');
-    </script>
     <meta charset="UTF-8" />
-    <!-- Apply the saved theme before first paint to avoid a flash of the wrong theme. -->
-    <script>
-      (function () {
-        try {
-          var m = localStorage.getItem('ledger-sync-theme') || 'dark';
-          var resolved = m === 'system'
-            ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
-            : m;
-          document.documentElement.setAttribute('data-theme', resolved);
-          // Keep the mobile browser chrome (address bar / status bar) in step
-          // with the theme so it doesn't render black behind the warm light UI.
-          var bar = resolved === 'light' ? '#f6f3ee' : '#000000';
-          var setMeta = function (name, content) {
-            var el = document.querySelector('meta[name="' + name + '"]');
-            if (el) el.setAttribute('content', content);
-          };
-          setMeta('theme-color', bar);
-          setMeta('color-scheme', resolved);
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      })();
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Ledger Sync — Self-hosted personal finance dashboard with analytics, budgeting, and tax planning." />
-    <meta name="theme-color" content="#000000" />
-    <meta name="color-scheme" content="dark" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+    <meta name="description" content="Gnos3 Finances: self-hosted personal finance dashboard with analytics, budgeting and tax planning." />
+    <meta name="theme-color" content="#0C1422" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Theme before first paint (no flash). External file: the container CSP allows no inline script. -->
+    <script src="/theme-init.js"></script>
+    <!-- Gnos3 Brand Kit favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Ledger Sync" />
-    <title>Ledger Sync</title>
+    <meta name="apple-mobile-web-app-title" content="Finances" />
+    <title>Gnos3 Finances</title>
   </head>
   <body>
     <div id="root"></div>

@@ -1,0 +1,16 @@
+{
+  "name": "Gnos3 Finances",
+  "short_name": "Finances",
+  "description": "Self-hosted personal finance dashboard: analytics, budgeting and tax planning.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0C1422",
+  "background_color": "#0C1422",
+  "icons": [
+    { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "maskable-icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

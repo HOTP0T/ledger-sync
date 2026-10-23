@@ -2,6 +2,17 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
+import { API_BASE_URL } from '@/constants'
+import { applyGnos3Locale, fetchGnos3Origins, listenForGnos3Theme } from '@/lib/gnos3Embed'
+import { useThemeStore } from '@/store/themeStore'
+
+// Inside the Gnos3 frame: keep the locale Gnos3 passed at sign-in, and follow the theme it
+// posts whenever the user changes it (only from the origins in LEDGER_SYNC_FRAME_ANCESTORS).
+applyGnos3Locale()
+listenForGnos3Theme(
+  (theme) => useThemeStore.getState().applyGnos3Theme(theme),
+  () => fetchGnos3Origins(API_BASE_URL),
+)
 
 // ── Suppress known harmless third-party console warnings (production only) ───
 // These are noise from upstream libraries that cannot be fixed on our side.

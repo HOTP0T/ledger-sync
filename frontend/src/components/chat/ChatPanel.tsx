@@ -109,7 +109,7 @@ export default function ChatPanel({
                   key={q}
                   type="button"
                   onClick={() => onSend(q)}
-                  className="block w-full text-left text-xs text-primary/80 hover:text-primary px-3 py-1.5 rounded-lg hover:bg-[var(--overlay-2)] transition-colors"
+                  className="block w-full text-left text-xs text-link/80 hover:text-link px-3 py-1.5 rounded-lg hover:bg-[var(--overlay-2)] transition-colors"
                 >
                   {q}
                 </button>
@@ -156,7 +156,7 @@ export default function ChatPanel({
               onClick={handleSend}
               disabled={!input.trim()}
               aria-label="Send message"
-              className="w-11 h-11 sm:w-9 sm:h-9 flex items-center justify-center shrink-0 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="w-11 h-11 sm:w-9 sm:h-9 flex items-center justify-center shrink-0 rounded-xl bg-primary/20 text-link hover:bg-primary/30 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               <Send className="w-4 h-4" />
             </button>

@@ -30,7 +30,7 @@ export default function AnomalyDetectionSubsection({
   return (
     <div className="space-y-3">
       <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
-        <AlertTriangle className="w-4 h-4 text-primary" />
+        <AlertTriangle className="w-4 h-4 text-link" />
         Anomaly Detection
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

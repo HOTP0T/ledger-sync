@@ -1,43 +1,39 @@
 /**
  * Gnos3 SSO Bootstrap Page
  *
- * Entry point when ledger-sync is embedded as a module inside the Gnos3-K4mi
- * stack. The Gnos3 host loads this route inside an iframe with a short-lived
- * exchange token: `/sso?gnos3_token=<jwt>`. We exchange it for a ledger-sync
- * session, then redirect into the app.
+ * Entry point when Finances (ledger-sync) is a module of the Gnos3 stack. Gnos3 loads this
+ * route in its iframe with a short-lived exchange token:
+ *   /sso?gnos3_token=<jwt>&theme=light|dark&lang=<locale>
+ * The theme and locale are recorded before render (public/theme-init.js, lib/gnos3Embed.ts);
+ * here the token is exchanged for a Finances session and the app opens on the dashboard.
  *
  * Route: /sso
  */
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { toast } from 'sonner'
-import { Loader2 } from 'lucide-react'
+
+import ModuleNotice from '@/components/shared/ModuleNotice'
 import { useAuthStore } from '@/store/authStore'
 import { useDemoStore } from '@/store/demoStore'
 import * as authApi from '@/services/api/auth'
 import { prefetchCoreData } from '@/lib/prefetch'
-import { ROUTES } from '@/constants'
 import { getApiErrorMessage } from '@/lib/errorUtils'
+import { ROUTES } from '@/constants'
 
 export default function SsoPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const { login, setTokens } = useAuthStore()
   const processedRef = useRef(false)
+  const [exchangeError, setExchangeError] = useState<string | null>(null)
+  const gnos3Token = searchParams.get('gnos3_token')
+  const error = gnos3Token ? exchangeError : 'This sign-in link has no Gnos3 token.'
 
   useEffect(() => {
     // Prevent double-processing in React StrictMode
-    if (processedRef.current) return
+    if (processedRef.current || !gnos3Token) return
     processedRef.current = true
-
-    const gnos3Token = searchParams.get('gnos3_token')
-
-    if (!gnos3Token) {
-      toast.error('Missing SSO token')
-      navigate(ROUTES.HOME, { replace: true })
-      return
-    }
 
     const handleSso = async () => {
       try {
@@ -59,21 +55,22 @@ export default function SsoPage() {
 
         navigate(ROUTES.DASHBOARD, { replace: true })
       } catch (err) {
-        const message = getApiErrorMessage(err)
-        toast.error(message)
-        navigate(ROUTES.HOME, { replace: true })
+        setExchangeError(getApiErrorMessage(err))
       }
     }
 
     handleSso()
-  }, [searchParams, navigate, login, setTokens])
+  }, [gnos3Token, navigate, login, setTokens])
 
-  return (
-    <div className="min-h-dvh flex items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-4">
-        <Loader2 className="w-10 h-10 text-app-blue animate-spin" />
-        <p className="text-muted-foreground text-sm">Signing you in…</p>
-      </div>
-    </div>
-  )
+  if (error) {
+    return (
+      <ModuleNotice title="Could Not Sign You In">
+        {error}
+        <br />
+        Open Finances again from the Gnos3 sidebar.
+      </ModuleNotice>
+    )
+  }
+
+  return <ModuleNotice title="Signing you in…" busy />
 }
