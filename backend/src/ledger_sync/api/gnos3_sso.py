@@ -10,9 +10,15 @@ tokens.
 
 The endpoint is inert (404) unless ``LEDGER_SYNC_GNOS3_SECRET_KEY`` is set, so
 the upstream deployment is unaffected.
+
+``GET /api/auth/gnos3/embed`` tells the frontend which Gnos3 origins may frame it
+(``LEDGER_SYNC_FRAME_ANCESTORS``, the list the CSP ``frame-ancestors`` header already
+publishes), so it accepts ``gnos3:theme`` messages from those origins only.
 """
 
+import re
 from typing import Annotated
+from urllib.parse import urlparse
 
 import jwt
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -30,6 +36,59 @@ router = APIRouter(prefix="/api/auth", tags=["gnos3-sso"])
 # keyed on (auth_provider="gnos3", auth_provider_id=<gnos3 sub>).
 GNOS3_PROVIDER = "gnos3"
 _GNOS3_ISSUER = "gnos3"
+
+
+def frame_ancestor_sources(raw: str) -> list[str]:
+    """Split ``LEDGER_SYNC_FRAME_ANCESTORS`` (spaces and/or commas) into CSP sources."""
+    return [source for source in re.split(r"[\s,]+", raw.strip()) if source]
+
+
+_DEFAULT_PORTS = {"http": 80, "https": 443}
+
+
+def gnos3_parent_origins(raw: str) -> list[str]:
+    """The exact http(s) origins in a frame-ancestors list, as a browser reports them.
+
+    CSP keywords (``'self'``), wildcards, bare hosts and anything unparsable are left
+    out: a message origin is compared for equality, so only exact origins can match.
+    """
+    origins: list[str] = []
+    for source in frame_ancestor_sources(raw):
+        if source.startswith("'") or "*" in source:
+            continue
+        parsed = urlparse(source)
+        scheme = parsed.scheme.lower()
+        if scheme not in _DEFAULT_PORTS or not parsed.hostname:
+            continue
+        try:
+            port = parsed.port
+        except ValueError:
+            continue
+        host = parsed.hostname  # lower-cased, IPv6 brackets stripped
+        if ":" in host:
+            host = f"[{host}]"
+        origin = f"{scheme}://{host}"
+        if port is not None and port != _DEFAULT_PORTS[scheme]:
+            origin = f"{origin}:{port}"
+        if origin not in origins:
+            origins.append(origin)
+    return origins
+
+
+class Gnos3EmbedConfig(BaseModel):
+    """What the frontend needs to run inside the Gnos3 frame."""
+
+    sso_enabled: bool
+    parent_origins: list[str]
+
+
+@router.get("/gnos3/embed", response_model=Gnos3EmbedConfig)
+def gnos3_embed_config() -> Gnos3EmbedConfig:
+    """Public: the Gnos3 origins allowed to frame the app (no secret, no user data)."""
+    return Gnos3EmbedConfig(
+        sso_enabled=bool(settings.gnos3_secret_key),
+        parent_origins=gnos3_parent_origins(settings.frame_ancestors),
+    )
 
 
 class Gnos3ExchangeRequest(BaseModel):

@@ -28,6 +28,7 @@ from ledger_sync.api.analytics_v2 import router as analytics_v2_router
 from ledger_sync.api.auth import router as auth_router
 from ledger_sync.api.calculations import router as calculations_router
 from ledger_sync.api.exchange_rates import router as exchange_rates_router
+from ledger_sync.api.gnos3_sso import frame_ancestor_sources
 from ledger_sync.api.gnos3_sso import router as gnos3_sso_router
 from ledger_sync.api.meta import router as meta_router
 from ledger_sync.api.oauth import router as oauth_router
@@ -140,7 +141,9 @@ async def add_security_headers(
     # deployed as a Gnos3 module), allow the configured origin(s) to iframe the
     # app. X-Frame-Options has no allowlist form, so it is omitted and the CSP
     # frame-ancestors directive is authoritative. Empty keeps the strict default.
-    _frame_ancestors = settings.frame_ancestors.strip()
+    # Commas are accepted in the env var but separate policies in a CSP header, so the
+    # sources are re-joined with spaces.
+    _frame_ancestors = " ".join(frame_ancestor_sources(settings.frame_ancestors))
     if _frame_ancestors:
         _frame_ancestors_directive = f"frame-ancestors {_frame_ancestors}"
     else:
